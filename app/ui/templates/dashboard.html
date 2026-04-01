@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Ana Sayfa – Asistan{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom:1.5rem;">📊 Genel Bakış</h2>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+    <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;font-weight:700;color:#4f46e5;">{{ conversations|length }}</div>
+        <div style="color:#666;font-size:.9rem;margin-top:.3rem;">Toplam Konuşma</div>
+    </div>
+    <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;font-weight:700;color:#38a169;">
+            {{ conversations|selectattr('date','equalto', today)|list|length }}
+        </div>
+        <div style="color:#666;font-size:.9rem;margin-top:.3rem;">Bugünkü Konuşma</div>
+    </div>
+</div>
+
+<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3>Son Konuşmalar</h3>
+        <a href="{{ url_for('ui.chat') }}" class="btn btn-primary">Yeni Sohbet</a>
+    </div>
+
+    {% if conversations %}
+    <table style="width:100%;border-collapse:collapse;font-size:.9rem;">
+        <thead>
+            <tr style="border-bottom:2px solid #e2e8f0;">
+                <th style="padding:.6rem;text-align:left;color:#666;">#</th>
+                <th style="padding:.6rem;text-align:left;color:#666;">Tarih</th>
+                <th style="padding:.6rem;text-align:left;color:#666;">Kategori</th>
+                <th style="padding:.6rem;text-align:left;color:#666;">İçerik</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in conversations|reverse %}
+            <tr style="border-bottom:1px solid #f0f2f5;">
+                <td style="padding:.6rem;color:#888;">{{ c.id }}</td>
+                <td style="padding:.6rem;">{{ c.date }}</td>
+                <td style="padding:.6rem;">
+                    <span style="background:#e0e7ff;color:#4f46e5;padding:.2rem .6rem;
+                                 border-radius:99px;font-size:.8rem;">{{ c.category }}</span>
+                </td>
+                <td style="padding:.6rem;">{{ c.content }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#888;text-align:center;padding:2rem 0;">
+        Henüz kayıtlı konuşma yok.
+        <a href="{{ url_for('ui.chat') }}">Sohbet başlatın →</a>
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
+
+

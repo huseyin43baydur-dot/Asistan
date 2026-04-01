@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Ayarlar – Asistan{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom:1.5rem;">⚙️ Ayarlar</h2>
+
+{% if saved %}
+<div style="background:#d1fae5;color:#065f46;padding:.8rem 1.2rem;border-radius:8px;margin-bottom:1rem;">
+    ✔ Ayarlar kaydedildi.
+</div>
+{% endif %}
+
+<div class="card">
+    <form method="POST" action="{{ url_for('ui.settings') }}">
+        <div style="margin-bottom:1.2rem;">
+            <label style="display:block;font-weight:600;margin-bottom:.4rem;">AI Modeli</label>
+            <select name="model" style="width:100%;padding:.6rem .9rem;border:1.5px solid #e2e8f0;
+                                        border-radius:8px;font-size:.95rem;outline:none;">
+                {% for model in ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo"] %}
+                <option value="{{ model }}" {{ 'selected' if settings.model == model }}>{{ model }}</option>
+                {% endfor %}
+            </select>
+            <small style="color:#888;display:block;margin-top:.3rem;">
+                Kullanılacak OpenAI modelini seçin.
+            </small>
+        </div>
+
+        <div style="margin-bottom:1.2rem;">
+            <label style="display:block;font-weight:600;margin-bottom:.4rem;">OpenAI API Anahtarı</label>
+            <input type="text" disabled
+                   value="{{ '✔ Ortam değişkeninden okunuyor (OPENAI_API_KEY)' }}"
+                   style="width:100%;padding:.6rem .9rem;border:1.5px solid #e2e8f0;
+                          border-radius:8px;font-size:.9rem;background:#f8f9fc;color:#888;">
+            <small style="color:#888;display:block;margin-top:.3rem;">
+                API anahtarını <code>OPENAI_API_KEY</code> ortam değişkeniyle ayarlayın.
+            </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+{% endblock %}

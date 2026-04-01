@@ -16,7 +16,7 @@ async def list_conversations(
     end_date: Optional[str] = Query(None, description="End date for filtering (YYYY-MM-DD)"),
     category: Optional[str] = Query(None, description="Category to filter by"),
     search: Optional[str] = Query(None, description="Search keyword for conversation content")
-)
+):
     filtered_conversations = conversations
 
     # Filter by date range
