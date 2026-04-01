@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Asistan{% endblock %}</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,.3);
+        }
+        header .brand { font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; }
+        nav a {
+            color: #a8b2d8;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: .95rem;
+            transition: color .2s;
+        }
+        nav a:hover, nav a.active { color: #fff; }
+        main { flex: 1; padding: 2rem; max-width: 900px; width: 100%; margin: 0 auto; }
+        footer {
+            text-align: center;
+            padding: .8rem;
+            font-size: .8rem;
+            color: #888;
+            background: #e8eaf0;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.07);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: .55rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: .9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity .2s;
+        }
+        .btn:hover { opacity: .85; }
+        .btn-primary { background: #4f46e5; color: #fff; }
+        .btn-danger  { background: #e53e3e; color: #fff; }
+        .btn-secondary { background: #e2e8f0; color: #1a1a2e; }
+    </style>
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    <header>
+        <span class="brand">🤖 Asistan</span>
+        <nav>
+            <a href="{{ url_for('ui.dashboard') }}"
+               class="{{ 'active' if request.endpoint == 'ui.dashboard' }}">Ana Sayfa</a>
+            <a href="{{ url_for('ui.chat') }}"
+               class="{{ 'active' if request.endpoint == 'ui.chat' }}">Sohbet</a>
+            <a href="{{ url_for('ui.settings') }}"
+               class="{{ 'active' if request.endpoint == 'ui.settings' }}">Ayarlar</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>Asistan &copy; 2026</footer>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
